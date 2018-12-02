@@ -4,9 +4,12 @@ import Button from '../UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
 import is from 'is_js'
 import axios from 'axios'
+import Service from '../../services/services'
 
 export default class Auth extends Component {
-  state = {
+  service = new Service()
+
+  initialState = {
     isFormValid: false,
 
     formControls: {
@@ -76,6 +79,9 @@ export default class Auth extends Component {
       }
     }
   }
+
+  state = this.initialState
+
   registerHandler = () => {
 
   }
@@ -135,18 +141,36 @@ export default class Auth extends Component {
     })
   }
 
+  checkResponseOnMessage = (controlName, message) => {
+    if (message.length > 0) {
+      console.log('MESSAGE', message[0])
+      const formControls = { ...this.state.formControls }
+      const control = { ...formControls[controlName] }
+      control.errorMessage = message[0]
+      control.valid = false
+      formControls[controlName] = control
+
+      this.setState ({formControls})
+    }
+  }
+
   checkInDb = (type, value) => {
     
     let params = {}
+    let field = ''
+
     if (type == "text"){ 
+      field = 'nikname'
       params = { "user": {"nikname": value, "email": "test@test.test", "firstname": "Test", "lastname": "Test", "password": "secret" } }
     } else{
+      field = 'email'
       params = { "user": {"nikname" : 'testtesttesttest', "email" : value, "firstname": "Test", "lastname": "Test", "password": "secret" } }
           }
 
     axios.post('http://localhost:3000/api/v1/checkindb', params)
       .then(response => {
         console.log('response', response.data)
+        this.checkResponseOnMessage(field, response.data)
       })
       .catch((error) => {
         console.log('ERROR', error);
@@ -167,7 +191,6 @@ export default class Auth extends Component {
                           :
                             null) 
               
-
       return (
         <React.Fragment>
           <Input
@@ -188,23 +211,19 @@ export default class Auth extends Component {
 
   regHandler = (event) => {
     event.preventDefault()
-    const params = { "user": 
-                      { "nikname": this.state.formControls.nikname.value, 
-                        "firstname": this.state.formControls.firstname.value, 
-                        "lastname": this.state.formControls.lastname.value, 
-                        "email": this.state.formControls.email.value, "password": this.state.formControls.password.value } }
-    
-      axios.post('http://localhost:3000/api/v1/users', params)
-        .then(response => {
-          console.log('ЩЕПРАВЛЕНО')
-        })
-        .catch((error) => {
-          console.log(error);
-        });
 
-      this.setState({
-        isFormValid: false
+
+    const params = this.state.formControls
+
+    this.service.createUser(params)
+      .then((user) => (console.log(user)))
+      .catch(function (error) {
+        console.log('ОШИБКА', error);
       })
+
+    this.setState({
+      isFormValid: false
+    })
   }
 
   render() {

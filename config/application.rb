@@ -28,6 +28,8 @@ module Testo
     # the framework and any gems in your application.
 
     # Don't generate system test files.
+    config.i18n.default_locale = :ru
+    config.time_zone = 'Moscow'
     config.generators.system_tests = nil
     config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]

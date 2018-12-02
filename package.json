@@ -4,6 +4,7 @@
   "dependencies": {
     "@rails/webpacker": "3.5",
     "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-react": "^6.24.1",
     "is_js": "^0.9.0",
     "prop-types": "^15.6.2",
