@@ -54,6 +54,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'webpacker', '~> 3.5'
 gem 'foreman'
+gem 'font-awesome-rails', '~> 4.7', '>= 4.7.0.4'
 
 #API
 gem 'grape'

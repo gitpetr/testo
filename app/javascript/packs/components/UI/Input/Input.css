@@ -4,6 +4,7 @@ table.Input {
 
 table.Input label {
     font-weight: bold;
+    color: #666;
 }
 
 table.Input input {
@@ -29,4 +30,9 @@ table.Input span {
 
 table.Input.invalid label {
     color: #f01f30;
+}
+
+.success {
+    color: green;
+    background-color: inherit;
 }

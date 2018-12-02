@@ -71,7 +71,7 @@ export default class Auth extends Component {
         value: '',
         type: 'password',
         label: 'Пароль:',
-        errorMessage: 'Минимум 5 символов',
+        errorMessage: 'Пожалуйста, выдумайте пароль длинее 5 символов',
         valid: false,
         touched: false,
         validation:{
@@ -142,7 +142,6 @@ export default class Auth extends Component {
 
   checkResponseOnMessage = (controlName, message) => {
     if (message.length > 0) {
-      console.log('MESSAGE', message.join())
       const formControls = { ...this.state.formControls }
       const control = { ...formControls[controlName] }
       control.errorMessage = message.join()
@@ -153,7 +152,7 @@ export default class Auth extends Component {
       const free = `${controlName} свободен`
       if (controlName == 'nikname' || controlName == 'email'){
             this.setState({ [controlName]: free })
-            console.log('NIKNAME', controlName, this.state[controlName])}
+        }
     }
   }
 
@@ -165,7 +164,6 @@ export default class Auth extends Component {
     this.service.checkInDb(type, value)
       .then(response => {
         this.checkResponseOnMessage(field, response.data)
-        console.log('response', response.data)
       })
       .catch((error) => {
         console.log('ERROR', error);
@@ -180,16 +178,13 @@ export default class Auth extends Component {
         ?
           <button
             onClick={() => this.checkInDb(control.type, control.value)}
-            style={{ float: 'right', margin: '-48px 60px 0 0'}}
+            style={{ float: 'right', margin: '-49px 120px 0 0'}}
           >
             Проверить
           </button>
         :
           null) 
       let freeMessage = this.state[controlName] || null
-      console.log('RFREE', controlName, freeMessage)
-                
-     
               
       return (
         <React.Fragment>
