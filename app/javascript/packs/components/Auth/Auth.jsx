@@ -11,6 +11,8 @@ export default class Auth extends Component {
 
   initialState = {
     isFormValid: false,
+    email: null,
+    nikname: null,
 
     formControls: {
       nikname: {
@@ -132,6 +134,7 @@ export default class Auth extends Component {
       isFormValid = formControls[name].valid && isFormValid
     })
 
+    this.setState({ [controlName]: null })
     this.setState({
       formControls, isFormValid
     })
@@ -145,8 +148,12 @@ export default class Auth extends Component {
       control.errorMessage = message.join()
       control.valid = false
       formControls[controlName] = control
-
       this.setState ({formControls})
+    } else {
+      const free = `${controlName} свободен`
+      if (controlName == 'nikname' || controlName == 'email'){
+            this.setState({ [controlName]: free })
+            console.log('NIKNAME', controlName, this.state[controlName])}
     }
   }
 
@@ -157,8 +164,8 @@ export default class Auth extends Component {
 
     this.service.checkInDb(type, value)
       .then(response => {
-        console.log('response', response.data)
         this.checkResponseOnMessage(field, response.data)
+        console.log('response', response.data)
       })
       .catch((error) => {
         console.log('ERROR', error);
@@ -179,6 +186,10 @@ export default class Auth extends Component {
           </button>
         :
           null) 
+      let freeMessage = this.state[controlName] || null
+      console.log('RFREE', controlName, freeMessage)
+                
+     
               
       return (
         <React.Fragment>
@@ -191,8 +202,9 @@ export default class Auth extends Component {
             label={control.label}
             shouldValidate={!!control.validation}
             errorMessage={control.errorMessage}
+            freeMessage={freeMessage}
             onChange={event => this.onChangeHandler(event, controlName)}
-          />{ valueFree }
+          />{ freeMessage ? null : valueFree }
         </React.Fragment>
       )
     })

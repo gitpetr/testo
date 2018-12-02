@@ -32,8 +32,13 @@ const Input = props => {
                 {
                   isInvalid(props)
                     ? <span>{props.errorMessage || 'Введите верное значение'}</span>
-                    : null
+                    :
+                    (props.freeMessage ) ? <span style={{color: 'green'}}>{props.freeMessage}</span> : null
                 }
+              
+                  
+                  
+              
               </td>
           </tr>
         </tbody> 
