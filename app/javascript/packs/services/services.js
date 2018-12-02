@@ -2,15 +2,6 @@ import 'babel-polyfill'
 import axios from 'axios'
 
 export default class Service {
-
-  // getResource = async (url) => {
-  //   const res = await axios.get(url);
-  //   if (res.statusText != "OK") {
-  //     throw new (Error)(`Could not fetch ${url}, reseived ${res.statusText}`)
-  //   }
-  //   return await res;
-  // }
-
   postResource = async (url, params) => {
     const res = await axios.post(url, params);
     if (res.statusText != "Created") {
@@ -34,16 +25,14 @@ export default class Service {
   _transformCheckParams(type, value) {
     let params = {}
     let field = ''
-    
-    if (type == "text"){
-              return { "user": {"nikname": value, "email": "test@test.test", "firstname": "Test", "lastname": "Test", "password": "secret" } }
-    } else { 
-              return { "user": {"nikname" : 'testtesttesttest', "email" : value, "firstname": "Test", "lastname": "Test", "password": "secret" } }
-          }
+
+    return (type == "text") 
+      ? 
+        { "user": { "nikname": value, "email": "test@test.test", "firstname": "Test", "lastname": "Test", "password": "secret" } }
+      :
+        { "user": { "nikname": 'testtesttesttest', "email": value, "firstname": "Test", "lastname": "Test", "password": "secret" } }
   }
   
-
-
   _transformUser(formControls) {
     return  { "user": 
               { "nikname": formControls.nikname.value, 
@@ -54,31 +43,4 @@ export default class Service {
               }
             }
   }
-
-  // _transformQuestion(qu) {
-  //   return ({
-  //     question: qu.title,
-  //     rightAnswer: qu.rightAnswer,
-  //     id: qu.id,
-  //     answers: [
-  //       { text: qu.answer1, id: 1 },
-  //       { text: qu.answer2, id: 2 },
-  //       { text: qu.answer3, id: 3 },
-  //       { text: qu.answer4, id: 4 }
-  //     ]
-  //   })
-  // }
-
-  // _transformPostQuestion(qu) {
-  //   return ({ "question": 
-  //             { 
-  //               "title": qu.question,
-  //               "answer1": qu.answers[0].text, 
-  //               "answer2": qu.answers[1].text, 
-  //               "answer3": qu.answers[2].text, 
-  //               "answer4": qu.answers[3].text,
-  //               "rightAnswer": qu.rightAnswer 
-  //             }
-  //           })
-  // }
 }

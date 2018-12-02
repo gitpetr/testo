@@ -81,11 +81,7 @@ export default class Auth extends Component {
   }
 
   state = this.initialState
-
-  registerHandler = () => {
-
-  }
-
+ 
   submitHandler = (event) => {
     event.preventDefault()
   }
@@ -155,21 +151,11 @@ export default class Auth extends Component {
   }
 
   checkInDb = (type, value) => {
-    
-    let params = {}
     let field = ''
 
-    if (type == "text"){ 
-      field = 'nikname'
-      params = { "user": {"nikname": value, "email": "test@test.test", "firstname": "Test", "lastname": "Test", "password": "secret" } }
-    } else{
-      field = 'email'
-      params = { "user": {"nikname" : 'testtesttesttest', "email" : value, "firstname": "Test", "lastname": "Test", "password": "secret" } }
-          }
+    field = (type == "text") ? 'nikname' : 'email'
 
     this.service.checkInDb(type, value)
-
-    // axios.post('http://localhost:3000/api/v1/checkindb', params)
       .then(response => {
         console.log('response', response.data)
         this.checkResponseOnMessage(field, response.data)
@@ -182,16 +168,17 @@ export default class Auth extends Component {
   renderInputs() {
     return Object.keys(this.state.formControls).map((controlName) => {
       const control = this.state.formControls[controlName]
-      
-               const valueFree = (  
-                         ((control.type == "email" || control.label == "Никнейм:") && control.valid)
-                          ?
-                            <button
-                              onClick={() => this.checkInDb(control.type, control.value)}
-                              style={{ float: 'right', margin: '-48px 60px 0 0'}}
-                            >Проверить</button>
-                          :
-                            null) 
+      const valueFree = (  
+        ((control.type == "email" || control.label == "Никнейм:") && control.valid)
+        ?
+          <button
+            onClick={() => this.checkInDb(control.type, control.value)}
+            style={{ float: 'right', margin: '-48px 60px 0 0'}}
+          >
+            Проверить
+          </button>
+        :
+          null) 
               
       return (
         <React.Fragment>
@@ -213,18 +200,16 @@ export default class Auth extends Component {
 
   regHandler = (event) => {
     event.preventDefault()
-
-
     const params = this.state.formControls
 
     this.service.createUser(params)
-      .then((user) => (console.log(user)))
+      .then((user) => (console.log('NEW USER: ', user)))
       .catch(function (error) {
         console.log('ОШИБКА', error);
       })
 
     this.setState({
-      isFormValid: false
+      ...this.initialState
     })
   }
 
