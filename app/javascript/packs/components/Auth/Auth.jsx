@@ -143,10 +143,10 @@ export default class Auth extends Component {
 
   checkResponseOnMessage = (controlName, message) => {
     if (message.length > 0) {
-      console.log('MESSAGE', message[0])
+      console.log('MESSAGE', message.join())
       const formControls = { ...this.state.formControls }
       const control = { ...formControls[controlName] }
-      control.errorMessage = message[0]
+      control.errorMessage = message.join()
       control.valid = false
       formControls[controlName] = control
 
@@ -167,7 +167,9 @@ export default class Auth extends Component {
       params = { "user": {"nikname" : 'testtesttesttest', "email" : value, "firstname": "Test", "lastname": "Test", "password": "secret" } }
           }
 
-    axios.post('http://localhost:3000/api/v1/checkindb', params)
+    this.service.checkInDb(type, value)
+
+    // axios.post('http://localhost:3000/api/v1/checkindb', params)
       .then(response => {
         console.log('response', response.data)
         this.checkResponseOnMessage(field, response.data)

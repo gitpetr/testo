@@ -25,15 +25,25 @@ export default class Service {
     return res
   }
 
-  // quiz_all = async () => {
-  //   const res = await this.getResource('/question')
-  //   return res.data.map(this._transformQuestion)
-  // }
-  // quiz_find = async (id) => {
-  //   const res = await this.getResource(`/question/${id}`)
-  //   console.log('/question/${id}', res.data)
-  //   return this._transformQuestion(res.data)
-  // }
+  checkInDb = async (type, value) => {
+    const user = this._transformCheckParams(type, value)
+    const res = await this.postResource('http://localhost:3000/api/v1/checkindb', user)
+    return res
+  }
+
+  _transformCheckParams(type, value) {
+    let params = {}
+    let field = ''
+    
+    if (type == "text"){
+              return { "user": {"nikname": value, "email": "test@test.test", "firstname": "Test", "lastname": "Test", "password": "secret" } }
+    } else { 
+              return { "user": {"nikname" : 'testtesttesttest', "email" : value, "firstname": "Test", "lastname": "Test", "password": "secret" } }
+          }
+  }
+  
+
+
   _transformUser(formControls) {
     return  { "user": 
               { "nikname": formControls.nikname.value, 
