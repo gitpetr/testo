@@ -1,10 +1,13 @@
 import React, { Component } from 'react'
 import './App.css'
+import Auth from '../Auth/Auth'
 
 class App extends Component {
   render() {
     return (
-       <div>Hello!</div>
+      <div>
+        <Auth />
+      </div>
     )
   }
 }

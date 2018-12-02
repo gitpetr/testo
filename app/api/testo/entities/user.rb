@@ -1,4 +1,4 @@
-module Testing
+module Testo
   module Entities
     class User < Grape::Entity
       expose :nikname

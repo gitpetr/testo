@@ -58,4 +58,4 @@ gem 'foreman'
 #API
 gem 'grape'
 gem 'grape-entity'
-gem 'grape_on_rails_routes', '~> 0.3.2'
+gem 'grape_on_rails_routes'
