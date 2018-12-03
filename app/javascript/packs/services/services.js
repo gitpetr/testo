@@ -28,9 +28,9 @@ export default class Service {
 
     return (type == "text") 
       ? 
-        { "user": { "nikname": value, "email": "test@test.test", "firstname": "Test", "lastname": "Test", "password": "secret" } }
+        { "user": { "nikname": value, "email": "test@test.test", "firstname": "Тест", "lastname": "Тест", "password": "secret" } }
       :
-        { "user": { "nikname": 'testtesttesttest', "email": value, "firstname": "Test", "lastname": "Test", "password": "secret" } }
+        { "user": { "nikname": 'testtesttesttest', "email": value, "firstname": "Тест", "lastname": "Тест", "password": "secret" } }
   }
   
   _transformUser(formControls) {

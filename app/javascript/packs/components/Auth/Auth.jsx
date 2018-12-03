@@ -10,6 +10,7 @@ export default class Auth extends Component {
   service = new Service()
 
   initialState = {
+    finished: false,
     isFormValid: false,
     email: null,
     nikname: null,
@@ -205,24 +206,31 @@ export default class Auth extends Component {
     })
   }
 
+  finishPage = () => {
+    this.setState({
+      ...this.initialState
+    })
+    this.setState({ finished: true })
+  }
+
   regHandler = (event) => {
     event.preventDefault()
     const params = this.state.formControls
 
     this.service.createUser(params)
-      .then((user) => (console.log('NEW USER: ', user)))
+      .then((user) => this.finishPage())
       .catch(function (error) {
         console.log('ОШИБКА', error);
       })
-
-    this.setState({
-      ...this.initialState
-    })
   }
 
+
+
   render() {
-    return (
-      <div className='Auth'>
+    const regForm = this.state.finished
+      ?
+        <h1>Регистрация Завершена.</h1>
+      :
         <div>
           <h1>Регистрация:</h1>
         
@@ -238,6 +246,10 @@ export default class Auth extends Component {
             </Button>
           </form>
         </div>
+  
+    return (
+      <div className='Auth'>
+        { regForm }
       </div>
     )
   }
