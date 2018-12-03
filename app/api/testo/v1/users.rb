@@ -46,7 +46,6 @@ module Testo
 
         post do
           @user = User.new(params[:user])
-          puts 'USER', params[:user], @user
           @user.valid?
           @user.errors.full_messages
         end
